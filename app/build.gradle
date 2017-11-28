@@ -6,6 +6,8 @@ ext.set("APP_VERSION", "${gitSha()}")
 apply plugin: 'com.android.application'
 apply plugin: "org.sonarqube"
 apply from: "../sonarqube.gradle"
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 Properties props = new Properties()
 File gradlePropertiesFile = file("gradle.properties")
@@ -126,6 +128,7 @@ tasks.withType(Test) {
 }
 
 dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
