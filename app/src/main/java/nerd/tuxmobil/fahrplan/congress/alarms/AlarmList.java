@@ -40,13 +40,9 @@ public class AlarmList extends ActionBarListActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        int actionBarColor = ContextCompat.getColor(this, R.color.colorActionBar);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(actionBarColor));
-
+        initView();
         global = (MyApp) getApplicationContext();
 
-        setContentView(R.layout.alarms);
 
         AlarmsDBOpenHelper alarmsDB = new AlarmsDBOpenHelper(this);
 
@@ -71,6 +67,13 @@ public class AlarmList extends ActionBarListActivity {
         registerForContextMenu(getListView());
 
         setResult(RESULT_CANCELED);
+    }
+
+    private void initView() {
+        setContentView(R.layout.alarms);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        int actionBarColor = ContextCompat.getColor(this, R.color.colorActionBar);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(actionBarColor));
     }
 
     @Override
