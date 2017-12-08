@@ -37,7 +37,7 @@ import nerd.tuxmobil.fahrplan.congress.MyApp;
 import nerd.tuxmobil.fahrplan.congress.MyApp.TASKS;
 import nerd.tuxmobil.fahrplan.congress.R;
 import nerd.tuxmobil.fahrplan.congress.about.AboutDialog;
-import nerd.tuxmobil.fahrplan.congress.alarms.AlarmList;
+import nerd.tuxmobil.fahrplan.congress.alarms.AlarmsActivity;
 import nerd.tuxmobil.fahrplan.congress.base.AbstractListFragment;
 import nerd.tuxmobil.fahrplan.congress.base.BaseActivity;
 import nerd.tuxmobil.fahrplan.congress.changes.ChangeListActivity;
@@ -380,7 +380,7 @@ public class MainActivity extends BaseActivity implements
                 aboutDialog();
                 return true;
             case R.id.item_alarms:
-                intent = new Intent(this, AlarmList.class);
+                intent = new Intent(this, AlarmsActivity.class);
                 startActivityForResult(intent, MyApp.ALARMLIST);
                 return true;
             case R.id.item_settings:

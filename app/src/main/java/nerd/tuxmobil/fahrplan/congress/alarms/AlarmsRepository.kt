@@ -6,6 +6,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import nerd.tuxmobil.fahrplan.congress.utils.getAlarmManager
+import nerd.tuxmobil.fahrplan.congress.models.Alarm
 
 @JvmOverloads
 fun scheduleAlarm(context: Context, eventId: String, day: Int, title: String, startTime: Long, alarmTime: Long, discardExisting: Boolean = false) {
@@ -25,6 +26,10 @@ fun scheduleAlarm(context: Context, eventId: String, day: Int, title: String, st
         alarmManager.cancel(pendingIntent)
     }
     alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent)
+}
+
+fun discardAlarm(context: Context, alarm: Alarm) {
+    discardAlarm(context, alarm.eventId, alarm.day, alarm.eventTitle, alarm.time)
 }
 
 fun discardAlarm(context: Context, eventId: String, day: Int, title: String, startTime: Long) {
