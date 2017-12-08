@@ -10,6 +10,7 @@ buildscript {
 
         // Libraries
         assertjAndroidVersion = "1.2.0"
+        contraintLayoutVersion = "1.0.2"
         emailIntentBuilderVersion = "1.0.0"
         junitVersion = "4.12"
         mockitoVersion = "2.13.0"
