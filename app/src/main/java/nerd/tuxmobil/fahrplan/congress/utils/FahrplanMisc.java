@@ -31,6 +31,7 @@ import nerd.tuxmobil.fahrplan.congress.MyApp;
 import nerd.tuxmobil.fahrplan.congress.R;
 import nerd.tuxmobil.fahrplan.congress.alarms.AlarmReceiver;
 import nerd.tuxmobil.fahrplan.congress.alarms.AlarmUpdater;
+import nerd.tuxmobil.fahrplan.congress.alarms.AlarmsRepository;
 import nerd.tuxmobil.fahrplan.congress.models.DateInfo;
 import nerd.tuxmobil.fahrplan.congress.models.DateInfos;
 import nerd.tuxmobil.fahrplan.congress.models.Lecture;
@@ -254,25 +255,12 @@ public class FahrplanMisc {
         String title = cursor.getString(cursor.getColumnIndex(AlarmsTable.Columns.EVENT_TITLE));
         long startTime = cursor.getLong(cursor.getColumnIndex(AlarmsTable.Columns.TIME));
 
-        Intent deleteAlarmIntent = new AlarmReceiver.AlarmIntentBuilder()
-                .setContext(context)
-                .setLectureId(lecture_id)
-                .setDay(day)
-                .setTitle(title)
-                .setStartTime(startTime)
-                .setIsDeleteAlarm()
-                .build();
-
         // delete any previous alarms of this lecture
         db.delete(AlarmsTable.NAME, AlarmsTable.Columns.EVENT_ID + "=?",
                 new String[]{lecture.lecture_id});
         db.close();
 
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingintent = PendingIntent.getBroadcast(
-                context, Integer.parseInt(lecture.lecture_id), deleteAlarmIntent, 0);
-        // Cancel any existing alarms for this lecture
-        alarmManager.cancel(pendingintent);
+        AlarmsRepository.discardAlarm(context, lecture_id, day, title, startTime);
 
         lecture.has_alarm = false;
     }
@@ -312,23 +300,7 @@ public class FahrplanMisc {
         MyApp.LogDebug("addAlarm",
                 "Alarm time: " + time.format("%Y-%m-%dT%H:%M:%S%z") + ", in seconds: " + when);
 
-        Intent addAlarmIntent = new AlarmReceiver.AlarmIntentBuilder()
-                .setContext(context)
-                .setLectureId(lecture.lecture_id)
-                .setDay(lecture.day)
-                .setTitle(lecture.title)
-                .setStartTime(startTime)
-                .setIsAddAlarm()
-                .build();
-
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingintent = PendingIntent.getBroadcast(
-                context, Integer.parseInt(lecture.lecture_id), addAlarmIntent, 0);
-        // Cancel any existing alarms for this lecture
-        alarmManager.cancel(pendingintent);
-
-        // Set new alarm
-        alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingintent);
+        AlarmsRepository.scheduleAlarm(context, lecture.lecture_id, lecture.day, lecture.title, startTime, when, true);
 
         int alarmTimeInMin = alarmTimes.get(alarmTimesIndex);
 
