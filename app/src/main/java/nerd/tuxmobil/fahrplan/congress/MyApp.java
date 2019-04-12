@@ -29,12 +29,12 @@ public class MyApp extends Application {
 
     public static DateInfos dateInfos = null;
 
-    private static long first_day_start = getMilliseconds("Europe/Paris",
+    private static long first_day_start = getMilliseconds("America/Sao_Paulo",
             BuildConfig.SCHEDULE_FIRST_DAY_START_YEAR,
             BuildConfig.SCHEDULE_FIRST_DAY_START_MONTH,
             BuildConfig.SCHEDULE_FIRST_DAY_START_DAY);
 
-    private static long last_day_end = getMilliseconds("Europe/Paris",
+    private static long last_day_end = getMilliseconds("America/Sao_Paulo",
             BuildConfig.SCHEDULE_LAST_DAY_END_YEAR,
             BuildConfig.SCHEDULE_LAST_DAY_END_MONTH,
             BuildConfig.SCHEDULE_LAST_DAY_END_DAY);
